@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
+import Button from "./components/Button";
+import Counter from "./helpers/counter";
 
 function App() {
     const [telBananen, setTelBananen] = useState(0);
@@ -19,7 +21,7 @@ function App() {
     const [agreed, toggleAgreed] = useState(false);
 
 
-    function handleReset() {
+    const handleReset = () => {
         setTelAardbeien(0);
         setTelBananen(0);
         setTelAppels(0);
@@ -70,14 +72,7 @@ function App() {
         <>
             <h1>Fruitmand bezorgservice</h1>
             <ul>
-
-                <li><span className="tekst"> Aardbeien </span>
-                    <button disabled={blockAardMin} type="button" onClick={countDownAardbeien}>-</button>
-                    {telAardbeien}
-                    <button disabled={false} type="button" onClick={countUpAardbeien}
-                    >+
-                    </button>
-                </li>
+                <Counter fruit="Aardbeien" telFruit={telAardbeien} setTelFruit={setTelAardbeien} blockFruitMin={blockAardMin} setBlockFruitMin={setBlockAardMin} counter={telAardbeien}/>
                 <li><span className="tekst"> Bananen </span>
                     <button disabled={blockBanaanMin} type="button" onClick={countDownBananen}>-</button>
                     {telBananen}
@@ -94,7 +89,7 @@ function App() {
                     <button disabled={false} type="button" onClick={() => setTelKiwis(telKiwis + 1)}>+</button>
                 </li>
                 <li>
-                    <button disabled={false} type="button" onClick={handleReset}>reset</button>
+                  <Button block={false} tekst="Reset" type="button" clickHandler={handleReset}/>
                 </li>
             </ul>
             <form onSubmit={handleSubmit}>
@@ -140,7 +135,8 @@ function App() {
 
                     <label><input type="checkbox" value={agreed} onChange={(e) => toggleAgreed(!(agreed))}/>Ik ga
                         akkoord met de voorwaarden </label>
-                    <button type="submit" disabled={!agreed}>Verzend</button>
+
+                    <Button block={!agreed} type="submit" tekst="Verzend"/>
                 </div>
             </form>
         </>
