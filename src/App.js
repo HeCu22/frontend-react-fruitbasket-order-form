@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
-import './App.css';
+
 import Button from "./components/Button";
-import Counter from "./helpers/counter";
+import Counter from "./components/Counter";
+import Labels from "./components/Labels";
+import './App.css';
 
 function App() {
     const [telBananen, setTelBananen] = useState(0);
@@ -9,7 +11,9 @@ function App() {
     const [telAardbeien, setTelAardbeien] = useState(0);
     const [blockAardMin, setBlockAardMin] = useState(true);
     const [telAppels, setTelAppels] = useState(0);
+    const [blockAppelMin, setBlockAppelMin] = useState(true);
     const [telKiwis, setTelKiwis] = useState(0);
+    const [blockKiwiMin, setBlockKiwiMin] = useState(true);
 
     const [inputValue, setInputValue] = useState("");
     const [naamValue, setNaamValue] = useState("");
@@ -28,89 +32,81 @@ function App() {
         setTelKiwis(0);
         setBlockAardMin(true);
         setBlockBanaanMin(true);
+        setBlockAppelMin(true);
+        setBlockKiwiMin(true);
     }
 
-    const countUpAardbeien = () => {
-        setTelAardbeien(telAardbeien + 1);
-        setBlockAardMin(false);
-    }
-    const countUpBananen = () => {
-        setTelBananen(telBananen + 1);
-        setBlockBanaanMin(false);
-    }
-
-    const countDownAardbeien = () => {
-        if (telAardbeien === 0) {
-            setBlockAardMin(true);
-        } else {
-            setTelAardbeien(telAardbeien - 1);
-        }
-    }
-
-    const countDownBananen = () => {
-        if (telBananen === 0) {
-            setBlockBanaanMin(true);
-        } else {
-            setTelBananen(telBananen - 1);
-        }
-    }
 
     function handleSubmit(e) {
         e.preventDefault();
         console.log('Het formulier is verstuurd');
-        console.log('Naam', inputValue, naamValue, zipCode, ageNumber);
+        console.log('Naam', inputValue, naamValue, zipCode, ageNumber, remarkValue);
         if (radioOverdag) {
             console.log('Bezorgfrequentie', optionValue, 'overdag');
         } else {
             console.log('Bezorgfrequentie', optionValue, 's Avonds');
         }
-        console.log('Bestelling Aardbeien', telAardbeien, 'Bananen', telBananen);
+        console.log('Bestelling Aardbeien', telAardbeien, 'Bananen', telBananen, 'Appels', telAppels, "Kiwi's", telKiwis);
         toggleAgreed(!agreed);
     }
 
     return (
-        <>
-            <h1>Fruitmand bezorgservice</h1>
-            <ul>
-                <Counter fruit="Aardbeien" telFruit={telAardbeien} setTelFruit={setTelAardbeien} blockFruitMin={blockAardMin} setBlockFruitMin={setBlockAardMin} counter={telAardbeien}/>
-                <li><span className="tekst"> Bananen </span>
-                    <button disabled={blockBanaanMin} type="button" onClick={countDownBananen}>-</button>
-                    {telBananen}
-                    <button disabled={false} type="button" onClick={countUpBananen}>+</button>
-                </li>
-                <li><span className="tekst"> Appels </span>
-                    <button disabled={true} type="button">-</button>
-                    {telAppels}
-                    <button disabled={false} type="button" onClick={() => setTelAppels(telAppels + 1)}>+</button>
-                </li>
-                <li><span className="tekst"> Kiwi's </span>
-                    <button disabled={true} type="button">-</button>
-                    {telKiwis}
-                    <button disabled={false} type="button" onClick={() => setTelKiwis(telKiwis + 1)}>+</button>
-                </li>
-                <li>
-                  <Button block={false} tekst="Reset" type="button" clickHandler={handleReset}/>
-                </li>
-            </ul>
-            <form onSubmit={handleSubmit}>
-                <div className="form-container">
-                    <label htmlFor="name-field">
-                        <span> Naam </span>
-                        <input type="tekst" id="name-field" value={inputValue}
-                               onChange={(e) => setInputValue(e.target.value)}/>
-                    </label>
-                    <label>
-                        <span> Achternaam  </span>
-                        <input type="tekst" value={naamValue} onChange={(e) => setNaamValue(e.target.value)}/>
-                    </label>
-                    <label>
-                        <span> Leeftijd </span>
-                        <input type="number" value={ageNumber}
-                               onChange={(e) => setAgeNumber((e.target.value))}/></label>
-                    <label><span>Postcode </span><input type="text" value={zipCode}
-                                                        onChange={(e) => setZipCode((e.target.value))}/></label>
+        <div>
+            <header className="nav">
+                <h1>Fruitmand bezorgservice</h1>
+            </header>
 
-                    <label><p>Bezorgfrequentie</p>
+            <section className="outer-container">
+                <ul className="inner-container">
+                    <Counter fruit="Aardbeien" telFruit={telAardbeien} setTelFruit={setTelAardbeien}
+                             blockFruitMin={blockAardMin} setBlockFruitMin={setBlockAardMin} counter={telAardbeien}/>
+                    <Counter fruit="Bananen" telFruit={telBananen} setTelFruit={setTelBananen}
+                             blockFruitMin={blockBanaanMin} setBlockFruitMin={setBlockBanaanMin} counter={telBananen}/>
+                    <Counter fruit="Appels" telFruit={telAppels} setTelFruit={setTelAppels}
+                             blockFruitMin={blockAppelMin} setBlockFruitMin={setBlockAppelMin} counter={telAppels}/>
+                    <Counter fruit="Kiwi's" telFruit={telKiwis} setTelFruit={setTelKiwis}
+                             blockFruitMin={blockKiwiMin} setBlockFruitMin={setBlockKiwiMin} counter={telKiwis}/>
+                    <li>
+                        <Button block={false} tekst="Reset" type="button" clickHandler={handleReset}/>
+                    </li>
+                </ul>
+            </section>
+            <section className="outer-container">
+                <form onSubmit={handleSubmit} className="inner-container">
+                    <div className="form-container">
+                        <Labels fieldclass="tekstbefore"
+                            field="Naam"
+                            type="tekst"
+                            id="voor-naam"
+                            inputValue={inputValue}
+                            setInputValue={setInputValue}
+                        />
+
+                    <Labels fieldclass="tekstbefore"
+                        field="Achternaam"
+                        type="tekst"
+                        id="achter-naam"
+                        inputvalue={naamValue}
+                        setInputValue={setNaamValue}
+                    />
+
+                    <Labels fieldclass="tekstbefore"
+                        field="Leeftijd"
+                            type="number"
+                            id="age-number"
+                            inputvalue={ageNumber}
+                            setInputValue={setAgeNumber}
+                    />
+                    <Labels fieldclass="tekstbefore"
+                        field="Postcode"
+                            type="tekst"
+                            id="zip-code"
+                            inputvalue={zipCode}
+                            setInputValue={setZipCode}
+                    />
+                    </div>
+
+                    <label className="rows"><span className="tekstlong">Bezorgfrequentie</span>
                         <select value={optionValue}
                                 onChange={(e) => setOptionValue(e.target.value)}>
                             <option value={optionValue}>{optionValue}</option>
@@ -121,25 +117,22 @@ function App() {
                         </select>
 
                     </label>
+                    <div className="rows">
+                        <Labels field="Overdag" type="radio" name="keuze" inputValue={radioOverdag}
+                                setInputValue={toggleRadioOverdag}/>
+                        <Labels field="'s Avonds'" type="radio" name="keuze" inputValue={!radioOverdag}
+                                setInputValue={toggleRadioOverdag}/>
+                    </div>
+                    <Labels fieldclass="tekstbefore" field="Opmerking" type="area" inputValue={remarkValue} setInputValue={setRemarkValue}/>
+                    <Labels fieldclass="tekslong" field="Ik ga akkoord met de voorwaarden"   type="checkbox" inputValue={agreed}
+                            setInputValue={toggleAgreed}/>
 
-                    <label>
-                        <input type="radio" name="keuze" value={!radioOverdag}
-                               onChange={(e) => toggleRadioOverdag(radioOverdag)}/>Overdag
-                    </label>
-                    <label>
-                        <input type="radio" name="keuze" value={radioOverdag}
-                               onChange={(e) => toggleRadioOverdag(!(radioOverdag))}/>'s Avonds
-                    </label>
-                    <label><p>Opmerking:</p><textarea value={remarkValue}
-                                                      onChange={(e) => setRemarkValue(e.target.value)}/></label>
-
-                    <label><input type="checkbox" value={agreed} onChange={(e) => toggleAgreed(!(agreed))}/>Ik ga
-                        akkoord met de voorwaarden </label>
 
                     <Button block={!agreed} type="submit" tekst="Verzend"/>
-                </div>
-            </form>
-        </>
+
+                </form>
+            </section>
+        </div>
     );
 }
 

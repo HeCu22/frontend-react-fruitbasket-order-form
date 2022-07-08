@@ -1,0 +1,14 @@
+.tekstbefore{
+    margin: 5px;
+    width: 100px;
+}
+
+input, select {
+    background-color: var(--cadet-grey);
+
+}
+
+.row-reverse {
+    flex-direction: row-reverse;
+}
+
