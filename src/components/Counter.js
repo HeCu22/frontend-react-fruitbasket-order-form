@@ -1,11 +1,13 @@
 import React from "react";
 
-function Counter({fruit,blockFruitMin,setBlockFruitMin,telFruit,setTelFruit,counter}) {
+function Counter({img,fruit,blockFruitMin,setBlockFruitMin,telFruit,setTelFruit,toggleAllowed}) {
 
     const countUpFruit = () => {
         setTelFruit(telFruit + 1);
         setBlockFruitMin(false);
-    }
+        toggleAllowed(true);
+
+           }
 
     const countDownFruit = () => {
         if (telFruit === 0) {
@@ -16,7 +18,7 @@ function Counter({fruit,blockFruitMin,setBlockFruitMin,telFruit,setTelFruit,coun
     }
 return (
     <>
-        <li><span className="tekst"> {fruit} </span>
+        <li><span className="tekst"> {img} {fruit} </span>
             <button disabled={blockFruitMin} type="button" onClick={countDownFruit}>-</button>
             {telFruit}
             <button disabled={false} type="button" onClick={countUpFruit}>+</button>

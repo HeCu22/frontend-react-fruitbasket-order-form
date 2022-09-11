@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import Button from "./components/Button";
 import Counter from "./components/Counter";
 import Labels from "./components/Labels";
+import logo from "./assets/screenshot-logo.png";
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
     const [radioOverdag, toggleRadioOverdag] = useState(true);
     const [remarkValue, setRemarkValue] = useState("");
     const [agreed, toggleAgreed] = useState(false);
+    const [resetAllowed, toggleResetAllowed] = useState(true);
 
 
     const handleReset = () => {
@@ -34,8 +36,8 @@ function App() {
         setBlockBanaanMin(true);
         setBlockAppelMin(true);
         setBlockKiwiMin(true);
+        toggleResetAllowed(false);
     }
-
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -53,22 +55,24 @@ function App() {
     return (
         <div>
             <header className="nav">
-                <h1>Fruitmand bezorgservice</h1>
+                {/*<h1>Fruitmand bezorgservice</h1>*/}
+                <span className="img-container">
+                    <img alt="logo" src={logo}/> </span>
             </header>
 
             <section className="outer-container">
                 <ul className="inner-container">
-                    <Counter fruit="Aardbeien" telFruit={telAardbeien} setTelFruit={setTelAardbeien}
-                             blockFruitMin={blockAardMin} setBlockFruitMin={setBlockAardMin} counter={telAardbeien}/>
-                    <Counter fruit="Bananen" telFruit={telBananen} setTelFruit={setTelBananen}
-                             blockFruitMin={blockBanaanMin} setBlockFruitMin={setBlockBanaanMin} counter={telBananen}/>
-                    <Counter fruit="Appels" telFruit={telAppels} setTelFruit={setTelAppels}
-                             blockFruitMin={blockAppelMin} setBlockFruitMin={setBlockAppelMin} counter={telAppels}/>
-                    <Counter fruit="Kiwi's" telFruit={telKiwis} setTelFruit={setTelKiwis}
-                             blockFruitMin={blockKiwiMin} setBlockFruitMin={setBlockKiwiMin} counter={telKiwis}/>
-                    <li>
-                        <Button block={false} tekst="Reset" type="button" clickHandler={handleReset}/>
-                    </li>
+                    <Counter img="🍓" fruit="Aardbeien" telFruit={telAardbeien} setTelFruit={setTelAardbeien}
+                             blockFruitMin={blockAardMin} setBlockFruitMin={setBlockAardMin} toggleAllowed={toggleResetAllowed}/>
+                    <Counter img="🍌" fruit="Bananen" telFruit={telBananen} setTelFruit={setTelBananen}
+                             blockFruitMin={blockBanaanMin} setBlockFruitMin={setBlockBanaanMin} toggleAllowed={toggleResetAllowed}/>
+                    <Counter img="🍎" fruit="Appels" telFruit={telAppels} setTelFruit={setTelAppels}
+                             blockFruitMin={blockAppelMin} setBlockFruitMin={setBlockAppelMin} toggleAllowed={toggleResetAllowed} />
+                    <Counter img="🥝" fruit="Kiwi's" telFruit={telKiwis} setTelFruit={setTelKiwis}
+                             blockFruitMin={blockKiwiMin} setBlockFruitMin={setBlockKiwiMin} toggleAllowed={toggleResetAllowed}/>
+                    <div className="reset">
+                        <Button block={!resetAllowed} tekst="Reset" type="button" clickHandler={handleReset}/>
+                    </div>
                 </ul>
             </section>
             <section className="outer-container">

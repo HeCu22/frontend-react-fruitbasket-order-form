@@ -6,16 +6,21 @@
 
 :root {
     /* CSS HEX */
-    --selective-yellow: #fdba35ff;
-    --flame: #dd6031ff;
+    --selective-yellow: #EEE5BE;
     --gunmetal: #193039ff;
-    --cadet-grey: #99a1a6ff;
-    --xanadu: #808f85ff;
+
+
+--sap-green: #507c33ff;
+--beau-blue: #c2dcf2ff;
+--platinum: #e6ebebff;
+--persian-orange: #d88c4eff;
+--rufous: #a50d0dff;
+
 }
 
 body {
     font-family: Avenir, Arial, sans-serif;
-    background-color: var(--xanadu);
+    background-color: var(--beau-blue);
     color: var(--gunmetal);
 }
 
@@ -38,16 +43,35 @@ li {
 textarea {
     width: 180px;
     height: 50px;
-    background-color: var(--cadet-grey);
+    background-color: var(--beau-blue);
 }
 
 button {
-    width: 70px;
-    background-color: var(--flame);
+    width: 30px;
+    background-color: var(--persian-orange);
+
+    color: #6e404a;
+}
+
+form button {
+    width: 100%;
+}
+
+
+
+button:disabled {
+    background-color: var(--selective-yellow);
+    color: gray;
+}
+
+
+
+img {
+    width: 100%;
 }
 
 .outer-container {
-    background-color: var(--cadet-grey);
+    background-color: var(--beau-blue);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -56,7 +80,7 @@ button {
 
 
 .inner-container {
-    background-color: var(--selective-yellow);
+    background-color: var(--platinum);
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -79,8 +103,8 @@ button {
 }
 
 .nav {
-    background-color: var(--gunmetal);
-    color: var(--selective-yellow);
+    background-color: var(--sap-green);
+    color: var(--platinum);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,6 +118,19 @@ button {
 
 .tekstlong {
     width: 180px;
+}
+
+.img-container {
+    max-width: 1000px;
+}
+
+.reset button {
+    width: 200px;
+}
+
+.reset button:disabled {
+    background-color: var(--selective-yellow);
+    color: gray;
 }
 
 
