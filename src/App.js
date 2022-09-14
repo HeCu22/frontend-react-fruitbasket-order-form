@@ -15,16 +15,19 @@ function App() {
     const [blockAppelMin, setBlockAppelMin] = useState(true);
     const [telKiwis, setTelKiwis] = useState(0);
     const [blockKiwiMin, setBlockKiwiMin] = useState(true);
-
-    const [inputValue, setInputValue] = useState("");
-    const [naamValue, setNaamValue] = useState("");
-    const [ageNumber, setAgeNumber] = useState(0);
-    const [zipCode, setZipCode] = useState("");
-    const [optionValue, setOptionValue] = useState("Iedere week");
-    const [radioOverdag, toggleRadioOverdag] = useState(true);
-    const [remarkValue, setRemarkValue] = useState("");
-    const [agreed, toggleAgreed] = useState(false);
     const [resetAllowed, toggleResetAllowed] = useState(true);
+
+    const [formState, setFormState] = useState({
+            voornaam: "",
+            achternaam: "",
+            leeftijd: "",
+            postcode: "",
+            bezorgfrequentie: "dagelijks",
+            keuze: "overdag",
+            opmerkingen: "",
+            akkoord: false
+        }
+    )
 
 
     const handleReset = () => {
@@ -42,16 +45,19 @@ function App() {
     function handleSubmit(e) {
         e.preventDefault();
         console.log('Het formulier is verstuurd');
-        console.log('Naam', inputValue, naamValue, zipCode, ageNumber, remarkValue);
-        if (radioOverdag) {
-            console.log('Bezorgfrequentie', optionValue, 'overdag');
-        } else {
-            console.log('Bezorgfrequentie', optionValue, 's Avonds');
-        }
+        console.log('State', formState);
+
         console.log('Bestelling Aardbeien', telAardbeien, 'Bananen', telBananen, 'Appels', telAppels, "Kiwi's", telKiwis);
-        toggleAgreed(!agreed);
+
+        setFormState(!formState.akkoord);
     }
 
+    function handleChange(evt) {
+        const value =
+            evt.target.type === "checkbox"? evt.target.checked :  evt.target.value;
+             setFormState({...formState, [evt.target.name]: value});
+
+    }
     return (
         <div>
             <header className="nav">
@@ -63,13 +69,17 @@ function App() {
             <section className="outer-container">
                 <ul className="inner-container">
                     <Counter img="🍓" fruit="Aardbeien" telFruit={telAardbeien} setTelFruit={setTelAardbeien}
-                             blockFruitMin={blockAardMin} setBlockFruitMin={setBlockAardMin} toggleAllowed={toggleResetAllowed}/>
+                             blockFruitMin={blockAardMin} setBlockFruitMin={setBlockAardMin}
+                             toggleAllowed={toggleResetAllowed}/>
                     <Counter img="🍌" fruit="Bananen" telFruit={telBananen} setTelFruit={setTelBananen}
-                             blockFruitMin={blockBanaanMin} setBlockFruitMin={setBlockBanaanMin} toggleAllowed={toggleResetAllowed}/>
+                             blockFruitMin={blockBanaanMin} setBlockFruitMin={setBlockBanaanMin}
+                             toggleAllowed={toggleResetAllowed}/>
                     <Counter img="🍎" fruit="Appels" telFruit={telAppels} setTelFruit={setTelAppels}
-                             blockFruitMin={blockAppelMin} setBlockFruitMin={setBlockAppelMin} toggleAllowed={toggleResetAllowed} />
+                             blockFruitMin={blockAppelMin} setBlockFruitMin={setBlockAppelMin}
+                             toggleAllowed={toggleResetAllowed}/>
                     <Counter img="🥝" fruit="Kiwi's" telFruit={telKiwis} setTelFruit={setTelKiwis}
-                             blockFruitMin={blockKiwiMin} setBlockFruitMin={setBlockKiwiMin} toggleAllowed={toggleResetAllowed}/>
+                             blockFruitMin={blockKiwiMin} setBlockFruitMin={setBlockKiwiMin}
+                             toggleAllowed={toggleResetAllowed}/>
                     <div className="reset">
                         <Button block={!resetAllowed} tekst="Reset" type="button" clickHandler={handleReset}/>
                     </div>
@@ -77,62 +87,109 @@ function App() {
             </section>
             <section className="outer-container">
                 <form onSubmit={handleSubmit} className="inner-container">
-                    <div className="form-container">
-                        <Labels fieldclass="tekstbefore"
-                            field="Naam"
-                            type="tekst"
+
+                        <label className="rows" htmlFor="voor-naam">
+                            <span className="tekstbefore"> Voornaam: </span>
+                            <input type="text"
                             id="voor-naam"
-                            inputValue={inputValue}
-                            setInputValue={setInputValue}
-                        />
+                            name="voornaam"
+                            value={formState.voornaam}
+                            onChange={handleChange}
+                            />
+                        </label>
+                        <label className="rows"  htmlFor="achter-naam">
+                            <span className="tekstbefore"> Achternaam: </span>
+                            <input type="text"
+                            id="achter-naam"
+                            name="achternaam"
+                            value={formState.achternaam}
+                            onChange={handleChange}
+                            />
+                        </label>
 
-                    <Labels fieldclass="tekstbefore"
-                        field="Achternaam"
-                        type="tekst"
-                        id="achter-naam"
-                        inputvalue={naamValue}
-                        setInputValue={setNaamValue}
-                    />
+                        <label className="rows" htmlFor="age-field">
+                            <span className="tekstbefore"> Leeftijd: </span>
+                            <input type="number"
+                                   id="age-field"
+                                   name="leeftijd"
+                                   value={formState.leeftijd}
+                                   onChange={handleChange}
+                            />
+                        </label>
 
-                    <Labels fieldclass="tekstbefore"
-                        field="Leeftijd"
-                            type="number"
-                            id="age-number"
-                            inputvalue={ageNumber}
-                            setInputValue={setAgeNumber}
-                    />
-                    <Labels fieldclass="tekstbefore"
-                        field="Postcode"
-                            type="tekst"
-                            id="zip-code"
-                            inputvalue={zipCode}
-                            setInputValue={setZipCode}
-                    />
-                    </div>
+                        <label className="rows" htmlFor="zip-code">
+                            <span className="tekstbefore">Postcode: </span>
+                            <input type="tekst"
+                                   id="zip-code"
+                                   name="postcode"
+                                   value={formState.postcode}
+                                   onChange={handleChange}
+                            />
+                        </label>
 
-                    <label className="rows"><span className="tekstlong">Bezorgfrequentie</span>
-                        <select value={optionValue}
-                                onChange={(e) => setOptionValue(e.target.value)}>
-                            <option value={optionValue}>{optionValue}</option>
+
+
+                    <label htmlFor="bezorg-frequentie" className="rows">
+                        <span className="tekstlong">Bezorgfrequentie :</span>
+                        <select name="bezorgfrequentie"
+                                id="bezorg-frequentie"
+                                value={formState.bezorgfrequentie}
+                                onChange={handleChange}>
                             <option value="dagelijks">dagelijks</option>
                             <option value="om de week">om de week</option>
                             <option value="eenmalig">eenmalig</option>
                             <option value="anders" selected>Anders</option>
                         </select>
+                    </label>
+
+                    <div className="rows">
+
+                        <label> <span className="tekstbefore"> Overdag </span>
+                            <input
+                                type="radio"
+                                name="keuze"
+                                value="overdag"
+                                checked={formState.keuze === "overdag"}
+                                onChange={handleChange}
+                            />
+                        </label>
+
+                        <label> <span className="tekstbefore"> 's Avonds bezorgen</span>
+                            <input
+                                type="radio"
+                                name="keuze"
+                                value="'s avonds"
+                                checked={formState.keuze === "'s avonds"}
+                                onChange={handleChange}
+                            />
+                        </label>
+
+                    </div>
+
+                    <label className="rows" htmlFor="remark-field">
+                        <span className="tekstbefore"> Opmerkingen: </span>
+                        <br/>
+                        <textarea
+                            id="remark-field"
+                            name="opmerkingen"
+                            value={formState.opmerkingen}
+                            onChange={handleChange}
+                        />
+                    </label>
+
+                    <label htmlFor="subscribe-field">
+                        <input type="checkbox"
+                               id="subscribe-field"
+                               name="akkoord"
+                               checked={formState.akkoord}
+                               onChange={handleChange}
+
+                        />
+                        <span> Ik ga akkoord met de voorwaarden </span>
 
                     </label>
-                    <div className="rows">
-                        <Labels field="Overdag" type="radio" name="keuze" inputValue={radioOverdag}
-                                setInputValue={toggleRadioOverdag}/>
-                        <Labels field="'s Avonds'" type="radio" name="keuze" inputValue={!radioOverdag}
-                                setInputValue={toggleRadioOverdag}/>
-                    </div>
-                    <Labels fieldclass="tekstbefore" field="Opmerking" type="area" inputValue={remarkValue} setInputValue={setRemarkValue}/>
-                    <Labels fieldclass="tekslong" field="Ik ga akkoord met de voorwaarden"   type="checkbox" inputValue={agreed}
-                            setInputValue={toggleAgreed}/>
 
-
-                    <Button block={!agreed} type="submit" tekst="Verzend"/>
+                    <Button block={!formState.akkoord} type="submit" tekst="Verzend"/>
 
                 </form>
             </section>

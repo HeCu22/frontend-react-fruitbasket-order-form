@@ -36,14 +36,13 @@ ul, li {
 
 li {
         flex-direction: row;
-
-
 }
 
 textarea {
     width: 180px;
     height: 50px;
     background-color: var(--beau-blue);
+    padding-left: 2px;
 }
 
 button {
@@ -87,7 +86,7 @@ img {
 
     align-items: center;
     height: 300px;
-    flex-basis: 1200px;
+    flex-basis: 500px;
     flex-grow: 0;
     flex-shrink: 1;
     margin: 20px;
@@ -117,7 +116,7 @@ img {
 }
 
 .tekstlong {
-    width: 180px;
+    width: 152px;
 }
 
 .img-container {
@@ -132,6 +131,23 @@ img {
     background-color: var(--selective-yellow);
     color: gray;
 }
+
+.tekstbefore{
+    margin: 5px;
+    width: 100px;
+}
+
+input, select {
+    background-color: var(--beau-blue);
+    padding-left: 2px;
+
+}
+
+select {
+    width: 120px;
+}
+
+
 
 
 

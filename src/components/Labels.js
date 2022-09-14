@@ -5,7 +5,7 @@ function Labels({field, name, type, id, inputValue, setInputValue,fieldclass}) {
 
     return (
         <>
-            <label className="rows">
+            <label htmlFor={id} className="rows">
                 <span className={fieldclass}> {field} </span>
                 {type === "area" &&
                     <textarea value={inputValue} name={name}
